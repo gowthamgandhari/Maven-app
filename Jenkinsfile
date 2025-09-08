@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('git checkout') {
             steps {
-             git branch: 'main', url: 'https://github.com/gowthamgandhari/Maven-app.git'
+             git branch: 'main', url: 'https://github.com/gowthamcloud268/Maven-app.git'
             }
         }
         stage('Trivy FS Scan') {
@@ -31,19 +31,19 @@ pipeline {
         }
         stage('docker build and tag image'){
             steps {
-                sh 'docker build -t gowthamgandhari/mavenwebapp .'
+                sh 'docker build -t gowthamcloud268/mavenwebapp .'
             }
         }
         stage('Trivy Image Scan') {
             steps {
-                sh "trivy image --format table -o image-report.html gowthamgandhari/mavenwebapp:latest"
+                sh "trivy image --format table -o image-report.html gowthamcloud268/mavenwebapp:latest"
             }
         }
         stage('Docker push image') {
             steps {
                 script {
                     withDockerRegistry(credentialsId: 'dockerhub-creds') {
-                        sh "docker push gowthamgandhari/mavenwebapp:latest"
+                        sh "docker push gowthamcloud268/mavenwebapp:latest"
                     }
                 }
             }
