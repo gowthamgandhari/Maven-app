@@ -1,8 +1,7 @@
 pipeline {
     agent any
-    
     tools{
-        maven 'Maven-3.9.11'
+        maven 'maven'
     }
     environment {
         SCANNER_HOME = tool 'sonar-scanner'
@@ -10,7 +9,7 @@ pipeline {
     stages {
         stage('git checkout') {
             steps {
-              git 'https://github.com/gowthamgandhari/Maven-app.git'
+             git branch: 'main', url: 'https://github.com/gowthamgandhari/Maven-app.git'
             }
         }
         stage('Trivy FS Scan') {
@@ -20,8 +19,8 @@ pipeline {
         }
         stage('Sonarqube') {
             steps {
-                withSonarQubeEnv('sonar-token') {
-                    sh "$SCANNER_HOME/bin/sonar-scanner -Dsonar.projectKey=Campground -Dsonar.projectName=Campground"
+                withSonarQubeEnv('sonar') {
+                    sh "$SCANNER_HOME/bin/sonar-scanner -Dsonar.projectKey=mavenapp -Dsonar.projectName=mavenapp"
                 }
             }
         }
